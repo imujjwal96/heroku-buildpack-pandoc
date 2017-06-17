@@ -6,14 +6,21 @@ indent() {
 
 echo "-----> Installing pandoc"
 BUILD_DIR=$1
+echo $BUILD_DIR
 VENDOR_DIR="vendor"
 PANDOC_DOWNLOAD_URL="https://www.dropbox.com/s/5iv2z4hs3te19xm/pandoc"
 
 echo "PANDOC_DOWNLOAD_URL = " $PANDOC_DOWNLOAD_URL | indent
 
 cd $BUILD_DIR
+pwd
+ls
 mkdir -p $VENDOR_DIR/pandoc/bin
+pwd
+ls
 cd $VENDOR_DIR
+pwd
+ls
 curl -L --silent -o pandoc/bin/pandoc $PANDOC_DOWNLOAD_URL
 chmod +x pandoc/bin/pandoc
 
