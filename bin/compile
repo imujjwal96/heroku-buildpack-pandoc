@@ -4,32 +4,12 @@ indent() {
   sed -u 's/^/       /'
 }
 
-echo "-----> Installing pandoc"
-BUILD_DIR=$1
-echo $BUILD_DIR
-VENDOR_DIR="vendor"
-PANDOC_DOWNLOAD_URL="https://www.dropbox.com/s/5iv2z4hs3te19xm/pandoc"
+wget https://hackage.haskell.org/package/pandoc-1.17.0.3/pandoc-1.17.0.3.tar.gz
+tar xvzf pandoc-1.17.0.3.tar.gz
+cd pandoc-1.17.0.3
 
-echo "PANDOC_DOWNLOAD_URL = " $PANDOC_DOWNLOAD_URL | indent
+curl -sSL https://get.haskellstack.org/ | sh
 
-cd $BUILD_DIR
-pwd
-ls
-mkdir -p $VENDOR_DIR/pandoc/bin
-pwd
-ls
-cd $VENDOR_DIR
-pwd
-ls
-curl -L --silent -o pandoc/bin/pandoc $PANDOC_DOWNLOAD_URL
-chmod +x pandoc/bin/pandoc
+stack setup
+stack install --test
 
-echo "exporting PATH" | indent
-PROFILE_PATH="$BUILD_DIR/.profile.d/pandoc.sh"
-echo $BUILD_DIR
-echo $PROFILE_PATH
-$PROFILE_PATH -v
-mkdir -p $(dirname $PROFILE_PATH)
-echo 'export PATH="$PATH:vendor/pandoc/bin"' >> $PROFILE_PATH
-echo $PROFILE_PATH
-$PROFILE_PATH -v
